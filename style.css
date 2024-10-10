@@ -22,6 +22,14 @@
   font: 20pt bold 'Vollkorn';
   color: #bbb;
 }
+/* === スマホ対応追記箇所 === */
+#drop_zone_sub_phone{
+  padding: 10px 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+/* ====== */
 .thumb {
   height: 75px;
   border: 1px solid #000;
