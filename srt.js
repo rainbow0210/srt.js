@@ -95,6 +95,9 @@ function onPlayerReady(event) {
       getSubFromUrl(subUrl, function(err) {
         if (err == false) {
           disableDropper();
+          //=== スマホ対応追記箇所 ===
+          disableDropper_Phone();
+          //======
         }
       });
     }
@@ -151,6 +154,11 @@ function getSub(url) {
           }
           parseSrt(j);
           disableDropper();
+
+          //=== スマホ対応追記箇所 ===
+          disableDropper_Phone();
+          //======
+
           // if(autoplay == "true") {
             // player.playVideo();
           // }
@@ -176,9 +184,21 @@ function disableDropper() {
   document.getElementById("drop_zone_sub").style.display = "none";
 }
 
+//=== スマホ対応追記箇所 ===
+function disableDropper_Phone() {
+  document.getElementById("drop_zone_sub_phone").style.display = "none";
+}
+//======
+
 var dropZoneSub = document.getElementById("drop_zone_sub");
 dropZoneSub.addEventListener("dragover", handleDragOver, false);
 dropZoneSub.addEventListener("drop", handleFileSelectSub, false);
+
+//=== スマホ対応追記箇所 ===
+var dropZoneSub_Phone = document.getElementById("drop_zone_sub_phone");
+//dropZoneSub_Phone.addEventListener("change", handleDragOver, false);
+dropZoneSub_Phone.addEventListener("change", handleFileSelectSub_Phone, false);
+//======
 
 var done = false;
 
@@ -209,6 +229,11 @@ function handleFileSelectSub(evt) {
     // console.log(evt.target.result);
     parseSrt(evt.target.result);
     disableDropper();
+
+    //=== スマホ対応追記箇所 ===
+    disableDropper_Phone();
+    //======
+    
     // if (autoplay == "true") {
       // player.playVideo();
     // }
@@ -218,6 +243,29 @@ function handleFileSelectSub(evt) {
   };
 }
 
+//=== スマホ対応追記箇所 ===
+function handleFileSelectSub_Phone(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+
+  var f = evt.target.files[0];
+
+  var reader = new FileReader();
+  reader.readAsText(f, "utf-8");
+  reader.onload = function(evt) {
+    // console.log(evt.target.result);
+    parseSrt(evt.target.result);
+    disableDropper();
+    disableDropper_Phone();
+    // if (autoplay == "true") {
+      // player.playVideo();
+    // }
+  };
+  reader.onerror = function(evt) {
+    alert("Error ：" + evt.target.error.code);
+  };
+}
+//======
 
 var timer;
 var state = -1;
